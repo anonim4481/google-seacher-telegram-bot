@@ -21,7 +21,7 @@ class GoogleSeacher
     link = @results[@current % 10][:href]
     @current += 1
     if link.start_with?('/search?')
-      next 
+      self.next
     else
       link.start_with?('/url?') ? link[7..-1] : "unrecognize" 
     end
