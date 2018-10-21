@@ -3,6 +3,7 @@ require 'uri'
 require 'open-uri'
 require 'nokogiri'
 require 'telegram/bot'
+require 'logger'
 
 TOKEN = '632124239:AAFZFLH6Vl7sDMqxji_NLtmJsziaS9Ry4no'
 
@@ -70,7 +71,7 @@ class Sender
   def more(message)
     if @seacher
       @bot.api.sendMessage(chat_id: message.chat.id, 
-                           text: @seacher.next[:name])
+                           text: @seacher.next[:href])
     else
       @bot.api.sendMessage(chat_id: message.chat.id, 
                            text: 'Enter request')
@@ -84,28 +85,30 @@ class Sender
     else
       @seacher = GoogleSeacher.new(message.text)
       @bot.api.sendMessage(chat_id: message.chat.id, 
-                           text: @seacher.next[:name])
+                           text: @seacher.next[:href])
     end
   end
 end
 
+logger = Logger.new(STDOUT)
+
 Telegram::Bot::Client.run(TOKEN) do |bot|
   sender = Sender.new(bot)
-  puts "bot cycle"
+  logger.debug "bot cycle"
   bot.listen do |message|
-    puts "get message: #{message.inspect}"
+    logger.debug "get message: #{message.inspect}"
     case message.text
     when '/start'
-      puts "message start"
+      logger.debug "message start"
       sender.start(message)
     when '/stop'
-      puts "message stop"
+      logger.debug "message stop"
       sender.stop(message)
     when '/more'
-      puts "message more"
+      logger.debug "message more"
       sender.more(message)
     else
-      puts "message else"
+      logger.debug "message else"
       sender.request(message)
     end
   end
