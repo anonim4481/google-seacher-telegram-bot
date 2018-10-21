@@ -76,7 +76,7 @@ class Sender
   def more(message)
     if @seacher
       @bot.api.sendMessage(chat_id: message.chat.id, 
-                           text: @seacher.next[:href])
+                           text: @seacher.next)
     else
       @bot.api.sendMessage(chat_id: message.chat.id, 
                            text: 'Enter request')
@@ -90,7 +90,7 @@ class Sender
     else
       @seacher = GoogleSeacher.new(message.text)
       @bot.api.sendMessage(chat_id: message.chat.id, 
-                           text: @seacher.next[:href])
+                           text: @seacher.next)
     end
   end
 end
