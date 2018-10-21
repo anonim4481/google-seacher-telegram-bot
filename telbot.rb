@@ -4,7 +4,7 @@ require 'open-uri'
 require 'nokogiri'
 require 'telegram/bot'
 
-TOKEN = ''
+TOKEN = '632124239:AAFZFLH6Vl7sDMqxji_NLtmJsziaS9Ry4no'
 
 class GoogleSeacher
   BASE_URL = 'https://www.google.ru/search'.freeze
