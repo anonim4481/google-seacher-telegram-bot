@@ -71,8 +71,10 @@ class Sender
     if @seacher
       @seacher = nil
     else
+      kb = Telegram::Bot::Types::ReplyKeyboardRemove
+             .new(remove_keyboard: true)
       @bot.api.sendMessage(chat_id: message.chat.id, 
-                           text: 'Enter request')
+                           text: 'Enter request', reply_markup: kb)
     end
   end
 
@@ -92,8 +94,10 @@ class Sender
                            text: 'Enter /more or /stop')
     else
       @seacher = GoogleSeacher.new(message.text)
+      kb = Telegram::Bot::Types::ReplyKeyboardMarkup
+             .new(keyboard: %w[/more /stop], one_time_keyboard: true)
       @bot.api.sendMessage(chat_id: message.chat.id, 
-                           text: @seacher.next)
+                           text: @seacher.next, reply_markup: kb)
     end
   end
 end
