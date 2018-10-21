@@ -1,10 +1,13 @@
+# frozen_string_literal: true
+
 require 'net/http'
 require 'uri'
 require 'open-uri'
 require 'nokogiri'
+require 'cgi'
 
 class GoogleSeacher
-  BASE_URL = 'https://www.google.ru/search'.freeze
+  BASE_URL = 'https://www.google.ru/search'
 
   def initialize(search_str)
     @search_str = search_str
@@ -20,7 +23,7 @@ class GoogleSeacher
       self.next
     elsif link.start_with?('/url?') 
       values = link[5..-1].split('&').map { |e| e.split('=')[1] }
-      values.find { |e| e.start_with?('http') }
+      CGI.unescape(values.find { |e| e.start_with?('http') })
     else
       "unrecognize" 
     end
