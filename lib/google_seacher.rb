@@ -25,7 +25,7 @@ class GoogleSeacher
       values = link[5..-1].split('&').map { |e| e.split('=')[1] }
       CGI.unescape(values.find { |e| e.start_with?('http') })
     else
-      "unrecognize" 
+      'unrecognize'
     end
   end
 
