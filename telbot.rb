@@ -25,7 +25,7 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
       sender.more(message)
     else
       logger.debug "message else"
-      do
+      begin
         sender.request(message)
         raise
       rescue
