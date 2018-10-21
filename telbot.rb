@@ -30,7 +30,6 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
         raise
       rescue => e
         logger.error("uncaught #{e} exception: #{e.message}")
-        logger.error("Stack trace: #{backtrace.map {|l| "  #{l}\n"}.join}")
         sender.alert(message, "backend error #{e}")
       end
     end
