@@ -18,8 +18,13 @@ class GoogleSeacher
 
   def next
     next_page if @results.size <= @current
+    link = @results[@current % 10][:href]
     @current += 1
-    @results[(@current - 1) % 10]
+    if link.start_with?('/search?')
+      next 
+    else
+      link.start_with?('/url?') ? link[7..-1] : "unrecognize" 
+    end
   end
 
   private
