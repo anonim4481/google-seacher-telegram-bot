@@ -54,31 +54,37 @@ class Sender
   end
 
   def start(message)
-    @bot.api.sendMessage(chat_id: message.chat.id, text: "Hello, #{message.from.first_name}")
+    @bot.api.sendMessage(chat_id: message.chat.id,
+                         text: "Hello, #{message.from.first_name}")
   end
 
   def stop(message)
     if @seacher
       @seacher = nil
     else
-      @bot.api.sendMessage(chat_id: message.chat.id, text: 'Enter request')
+      @bot.api.sendMessage(chat_id: message.chat.id, 
+                           text: 'Enter request')
     end
   end
 
   def more(message)
     if @seacher
-      @bot.api.sendMessage(chat_id: message.chat.id, text: @seacher.next[:name])
+      @bot.api.sendMessage(chat_id: message.chat.id, 
+                           text: @seacher.next[:name])
     else
-      @bot.api.sendMessage(chat_id: message.chat.id, text: 'Enter request')
+      @bot.api.sendMessage(chat_id: message.chat.id, 
+                           text: 'Enter request')
     end
   end
 
   def request(message)
     if @seacher
-      @bot.api.sendMessage(chat_id: message.chat.id, text: 'Enter /more or /stop')
+      @bot.api.sendMessage(chat_id: message.chat.id, 
+                           text: 'Enter /more or /stop')
     else
       @seacher = GoogleSeacher.new(message.text)
-      @bot.api.sendMessage(chat_id: message.chat.id, text: @seacher.next[:name])
+      @bot.api.sendMessage(chat_id: message.chat.id, 
+                           text: @seacher.next[:name])
     end
   end
 end
