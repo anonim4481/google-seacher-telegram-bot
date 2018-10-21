@@ -22,8 +22,11 @@ class GoogleSeacher
     @current += 1
     if link.start_with?('/search?')
       self.next
+    elsif link.start_with?('/url?') 
+      values = link[5..-1].split('&').map { |e| e.split('=')[1] }
+      values.find { |e| e.start_with?('http') }
     else
-      link.start_with?('/url?') ? link[7..-1] : "unrecognize" 
+      "unrecognize" 
     end
   end
 
