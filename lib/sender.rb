@@ -49,4 +49,8 @@ class Sender
                            text: @seacher.next, reply_markup: kb)
     end
   end
+
+  def alert(message, text)
+    @bot.api.sendMessage(chat_id: message.chat.id, text: text)
+  end
 end

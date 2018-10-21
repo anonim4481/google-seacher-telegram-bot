@@ -16,7 +16,7 @@ class GoogleSeacher
   end
 
   def next
-    next_page if @results.size <= @current
+    next_page if @results.size - 1 < @current % 10
     link = @results[@current % 10][:href]
     @current += 1
     if link.start_with?('/search?')
@@ -37,6 +37,7 @@ class GoogleSeacher
     doc = Nokogiri::HTML(html)
     raise if doc.css('.r').empty?
     @results.clear
+    @current = (@current.to_f/10).ceil*10
     doc.css('.r').each do |e|
       a = e.css('a')
       @results << { name: a.text, href: a.attr('href').value }
